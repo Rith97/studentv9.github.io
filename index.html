@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>កម្មវិធីចុះឈ្មោះសិស្ស</title>
+    <!-- Import Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Import Google Fonts (Khmer font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <!-- Import Ionicons for icons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        body { font-family: 'Kantumruy Pro', sans-serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        .required-label::after { content: ' *'; color: red; }
+        /* Toast animation */
+        .toast-enter { transform: translateX(100%); }
+        .toast-enter-active { transform: translateX(0); transition: transform 300ms ease-in-out; }
+        .toast-exit { transform: translateX(0); }
+        .toast-exit-active { transform: translateX(100%); transition: transform 300ms ease-in-out; }
+        select:disabled { background-color: #f3f4f6; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-blue-700">ប្រព័ន្ធគ្រប់គ្រងការចុះឈ្មោះសិស្ស</h1>
+            <p class="text-gray-600 mt-2">សូមស្វាគមន៍! សូម​បំពេញ​ព័ត៌មាន​សិស្ស​នៅ​ក្នុង​ទម្រង់​ខាងក្រោម។</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Registration Form Column -->
+            <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg h-fit">
+                <h2 class="text-2xl font-semibold mb-6 border-b pb-3 text-blue-600">ទម្រង់ចុះឈ្មោះ</h2>
+                <form id="registration-form" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label for="studentName" class="block text-sm font-medium text-gray-700 required-label">ឈ្មោះសិស្ស</label>
+                            <input type="text" id="studentName" name="studentName" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 required-label">ភេទ</label>
+                            <div class="flex items-center space-x-4 mt-2">
+                                <label class="flex items-center"><input type="radio" name="gender" value="ប្រុស" class="text-blue-600 focus:ring-blue-500" checked><span class="ml-2">ប្រុស</span></label>
+                                <label class="flex items-center"><input type="radio" name="gender" value="ស្រី" class="text-pink-600 focus:ring-pink-500"><span class="ml-2">ស្រី</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="dob" class="block text-sm font-medium text-gray-700 required-label">ថ្ងៃខែឆ្នាំកំណើត</label>
+                            <input type="date" id="dob" name="dob" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Place of Birth Fields -->
+                    <fieldset class="border-t pt-4">
+                        <legend class="text-sm font-medium text-gray-700 mb-2">ទីកន្លែងកំណើត</legend>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="pobProvince" class="block text-sm font-medium text-gray-700">ខេត្ត/រាជធានី</label>
+                                <select id="pobProvince" name="pobProvince" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
+                            </div>
+                            <div>
+                                <label for="pobDistrict" class="block text-sm font-medium text-gray-700">ស្រុក/ខណ្ឌ</label>
+                                <select id="pobDistrict" name="pobDistrict" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled></select>
+                            </div>
+                            <div>
+                                <label for="pobCommune" class="block text-sm font-medium text-gray-700">ឃុំ/សង្កាត់</label>
+                                <select id="pobCommune" name="pobCommune" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled></select>
+                            </div>
+                            <div>
+                                <label for="pobVillage" class="block text-sm font-medium text-gray-700">ភូមិ</label>
+                                <select id="pobVillage" name="pobVillage" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled></select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="fatherName" class="block text-sm font-medium text-gray-700">ឈ្មោះឳពុក</label>
+                            <input type="text" id="fatherName" name="fatherName" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="motherName" class="block text-sm font-medium text-gray-700">ឈ្មោះម្តាយ</label>
+                            <input type="text" id="motherName" name="motherName" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <!-- Current Address Fields -->
+                    <fieldset class="border-t pt-4">
+                        <legend class="text-sm font-medium text-gray-700 mb-2">អាសយដ្ឋានបច្ចុប្បន្ន</legend>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="currentProvince" class="block text-sm font-medium text-gray-700">ខេត្ត/រាជធានី</label>
+                                <select id="currentProvince" name="currentProvince" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
+                            </div>
+                            <div>
+                                <label for="currentDistrict" class="block text-sm font-medium text-gray-700">ស្រុក/ខណ្ឌ</label>
+                                <select id="currentDistrict" name="currentDistrict" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled></select>
+                            </div>
+                            <div>
+                                <label for="currentCommune" class="block text-sm font-medium text-gray-700">ឃុំ/សង្កាត់</label>
+                                <select id="currentCommune" name="currentCommune" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled></select>
+                            </div>
+                            <div>
+                                <label for="currentVillage" class="block text-sm font-medium text-gray-700">ភូមិ</label>
+                                <select id="currentVillage" name="currentVillage" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled></select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="fromSchool" class="block text-sm font-medium text-gray-700">មកពីសាលា</label>
+                            <select id="fromSchool" name="fromSchool" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">-- ជ្រើសរើសសាលា --</option>
+                                <option value="បឋមព្រៃមេលង">បឋមព្រៃមេលង</option>
+                                <option value="បឋមព្រៃម្លូ">បឋមព្រៃម្លូ</option>
+                                <option value="បឋមអង្គសិរីម៉ាលី">បឋមអង្គសិរីម៉ាលី</option>
+                                <option value="បឋមបន្ទាយធ្លាយ">បឋមបន្ទាយធ្លាយ</option>
+                                <option value="បឋមព្រឹក្សា">បឋមព្រឹក្សា</option>
+                                <option value="បឋមកែវកាំភ្លើង">បឋមកែវកាំភ្លើង</option>
+                                <option value="បឋមទេពនិមិ្មត">បឋមទេពនិមិ្មត</option>
+                                <option value="បឋមព្រៃបាយ">បឋមព្រៃបាយ</option>
+                                <option value="បឋមអណ្តូងសំរិត">បឋមអណ្តូងសំរិត</option>
+                                <option value="វិទ្យាល័យសុខអានព្រៃមេលង">វិទ្យាល័យសុខអានព្រៃមេលង</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="className" class="block text-sm font-medium text-gray-700">ថ្នាក់</label>
+                            <input type="text" id="className" name="className" placeholder="ឧ. 12A" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="gpa" class="block text-sm font-medium text-gray-700">មធ្យមភាគប្រចាំឆ្នាំ</label>
+                            <input type="number" id="gpa" name="gpa" placeholder="ឧ. 85" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="contact" class="block text-sm font-medium text-gray-700 required-label">លេខទូរស័ព្ទ</label>
+                            <input type="tel" id="contact" name="contact" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out flex items-center justify-center space-x-2">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <span>ចុះឈ្មោះ</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Student List Column -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+                <div class="flex justify-between items-center mb-6 border-b pb-3">
+                    <h2 class="text-2xl font-semibold text-blue-600">បញ្ជីឈ្មោះសិស្ស</h2>
+                    <button id="download-csv-btn" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-300 ease-in-out flex items-center space-x-2">
+                        <ion-icon name="download-outline"></ion-icon>
+                        <span>ទាញយក CSV</span>
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ឈ្មោះ</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ភេទ</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ថ្ងៃខែឆ្នាំកំណើត</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ទីកន្លែងកំណើត</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ឈ្មោះឳពុក</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ឈ្មោះម្តាយ</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">អាសយដ្ឋានបច្ចុប្បន្ន</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">មកពីសាលា</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ថ្នាក់</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">មធ្យមភាគ</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">លេខទូរស័ព្ទ</th>
+                                <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">សកម្មភាព</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-list" class="bg-white divide-y divide-gray-200">
+                             <tr><td colspan="13" class="text-center p-8 text-gray-500">មិនទាន់មានទិន្នន័យ...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Log -->
+        <div class="mt-8 bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-2xl font-semibold mb-6 border-b pb-3 text-blue-600">ប្រវត្តិសកម្មភាព</h2>
+            <div id="history-log" class="space-y-4 max-h-96 overflow-y-auto">
+                <p class="text-center text-gray-500">មិនទាន់មានសកម្មភាព...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="edit-modal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <form id="edit-form">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[80vh] overflow-y-auto">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4" id="modal-title">កែសម្រួលព័ត៌មានសិស្ស</h3>
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="md:col-span-2">
+                                    <label for="editStudentName" class="block text-sm font-medium text-gray-700 required-label">ឈ្មោះសិស្ស</label>
+                                    <input type="text" id="editStudentName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 required-label">ភេទ</label>
+                                    <div class="flex items-center space-x-4 mt-2">
+                                        <label class="flex items-center"><input type="radio" name="editGender" value="ប្រុស" class="text-blue-600 focus:ring-blue-500"><span class="ml-2">ប្រុស</span></label>
+                                        <label class="flex items-center"><input type="radio" name="editGender" value="ស្រី" class="text-pink-600 focus:ring-pink-500"><span class="ml-2">ស្រី</span></label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="editDob" class="block text-sm font-medium text-gray-700 required-label">ថ្ងៃខែឆ្នាំកំណើត</label>
+                                    <input type="date" id="editDob" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                            </div>
+                             <!-- Edit Place of Birth Fields -->
+                            <fieldset class="border-t pt-4">
+                                <legend class="text-sm font-medium text-gray-700 mb-2">ទីកន្លែងកំណើត</legend>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="editPobProvince" class="block text-sm font-medium text-gray-700">ខេត្ត/រាជធានី</label>
+                                        <select id="editPobProvince" name="editPobProvince" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
+                                    </div>
+                                    <div>
+                                        <label for="editPobDistrict" class="block text-sm font-medium text-gray-700">ស្រុក/ខណ្ឌ</label>
+                                        <select id="editPobDistrict" name="editPobDistrict" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
+                                    </div>
+                                    <div>
+                                        <label for="editPobCommune" class="block text-sm font-medium text-gray-700">ឃុំ/សង្កាត់</label>
+                                        <select id="editPobCommune" name="editPobCommune" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
+                                    </div>
+                                    <div>
+                                        <label for="editPobVillage" class="block text-sm font-medium text-gray-700">ភូមិ</label>
+                                        <select id="editPobVillage" name="editPobVillage" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="editFatherName" class="block text-sm font-medium text-gray-700">ឈ្មោះឳពុក</label>
+                                    <input type="text" id="editFatherName" name="editFatherName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="editMotherName" class="block text-sm font-medium text-gray-700">ឈ្មោះម្តាយ</label>
+                                    <input type="text" id="editMotherName" name="editMotherName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                            </div>
+                             <!-- Edit Current Address Fields -->
+                            <fieldset class="border-t pt-4">
+                                <legend class="text-sm font-medium text-gray-700 mb-2">អាសយដ្ឋានបច្ចុប្បន្ន</legend>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="editCurrentProvince" class="block text-sm font-medium text-gray-700">ខេត្ត/រាជធានី</label>
+                                        <select id="editCurrentProvince" name="editCurrentProvince" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
+                                    </div>
+                                    <div>
+                                        <label for="editCurrentDistrict" class="block text-sm font-medium text-gray-700">ស្រុក/ខណ្ឌ</label>
+                                        <select id="editCurrentDistrict" name="editCurrentDistrict" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
+                                    </div>
+                                    <div>
+                                        <label for="editCurrentCommune" class="block text-sm font-medium text-gray-700">ឃុំ/សង្កាត់</label>
+                                        <select id="editCurrentCommune" name="editCurrentCommune" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
+                                    </div>
+                                    <div>
+                                        <label for="editCurrentVillage" class="block text-sm font-medium text-gray-700">ភូមិ</label>
+                                        <select id="editCurrentVillage" name="editCurrentVillage" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="editFromSchool" class="block text-sm font-medium text-gray-700">មកពីសាលា</label>
+                                    <select id="editFromSchool" name="editFromSchool" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">-- ជ្រើសរើសសាលា --</option>
+                                        <option value="បឋមព្រៃមេលង">បឋមព្រៃមេលង</option>
+                                        <option value="បឋមព្រៃម្លូ">បឋមព្រៃម្លូ</option>
+                                        <option value="បឋមអង្គសិរីម៉ាលី">បឋមអង្គសិរីម៉ាលី</option>
+                                        <option value="បឋមបន្ទាយធ្លាយ">បឋមបន្ទាយធ្លាយ</option>
+                                        <option value="បឋមព្រឹក្សា">បឋមព្រឹក្សា</option>
+                                        <option value="បឋមកែវកាំភ្លើង">បឋមកែវកាំភ្លើង</option>
+                                        <option value="បឋមទេពនិមិ្មត">បឋមទេពនិមិ្មត</option>
+                                        <option value="បឋមព្រៃបាយ">បឋមព្រៃបាយ</option>
+                                        <option value="បឋមអណ្តូងសំរិត">បឋមអណ្តូងសំរិត</option>
+                                        <option value="វិទ្យាល័យសុខអានព្រៃមេលង">វិទ្យាល័យសុខអានព្រៃមេលង</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="editClassName" class="block text-sm font-medium text-gray-700">ថ្នាក់</label>
+                                    <input type="text" id="editClassName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="editGpa" class="block text-sm font-medium text-gray-700">មធ្យមភាគប្រចាំឆ្នាំ</label>
+                                    <input type="number" id="editGpa" name="editGpa" placeholder="ឧ. 85" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label for="editContact" class="block text-sm font-medium text-gray-700 required-label">លេខទូរស័ព្ទ</label>
+                                    <input type="tel" id="editContact" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">រក្សាទុក</button>
+                        <button type="button" id="cancel-edit-btn" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">បោះបង់</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Modal -->
+    <div id="delete-modal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <ion-icon name="warning-outline" class="h-6 w-6 text-red-600"></ion-icon>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">លុបข้อมูลសិស្ស</h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">តើអ្នកពិតជាចង់លុបข้อมูลសិស្សនេះមែនទេ? សកម្មភាពនេះមិនអាចមិនធ្វើវិញបានទេ។</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" id="confirm-delete-btn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 sm:ml-3 sm:w-auto sm:text-sm">លុប</button>
+                    <button type="button" id="cancel-delete-btn" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm">បោះបង់</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-5 right-5 bg-green-500 text-white py-2 px-5 rounded-lg shadow-xl toast-enter">
+        <p id="toast-message">Success!</p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, getDoc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // --- Firebase Configuration ---
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID" };
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        let userId = null;
+        let studentsCollectionRef = null;
+        let historyCollectionRef = null;
+        let unsubscribeStudents = null;
+        let unsubscribeHistory = null;
+        let allStudents = []; // Global variable to hold student data for CSV export
+
+        // --- DOM Elements ---
+        const registrationForm = document.getElementById('registration-form');
+        const studentList = document.getElementById('student-list');
+        const editModal = document.getElementById('edit-modal');
+        const editForm = document.getElementById('edit-form');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        const deleteModal = document.getElementById('delete-modal');
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        const downloadCsvBtn = document.getElementById('download-csv-btn');
+        const historyLog = document.getElementById('history-log');
+        let toastTimeout;
+        let studentToDeleteId = null;
+        
+        // Address selectors for POB form
+        const pobProvinceSelect = document.getElementById('pobProvince');
+        const pobDistrictSelect = document.getElementById('pobDistrict');
+        const pobCommuneSelect = document.getElementById('pobCommune');
+        const pobVillageSelect = document.getElementById('pobVillage');
+
+        // Address selectors for Current Address form
+        const currentProvinceSelect = document.getElementById('currentProvince');
+        const currentDistrictSelect = document.getElementById('currentDistrict');
+        const currentCommuneSelect = document.getElementById('currentCommune');
+        const currentVillageSelect = document.getElementById('currentVillage');
+
+        // Address selectors for edit form
+        const editPobProvinceSelect = document.getElementById('editPobProvince');
+        const editPobDistrictSelect = document.getElementById('editPobDistrict');
+        const editPobCommuneSelect = document.getElementById('editPobCommune');
+        const editPobVillageSelect = document.getElementById('editPobVillage');
+        const editCurrentProvinceSelect = document.getElementById('editCurrentProvince');
+        const editCurrentDistrictSelect = document.getElementById('editCurrentDistrict');
+        const editCurrentCommuneSelect = document.getElementById('editCurrentCommune');
+        const editCurrentVillageSelect = document.getElementById('editCurrentVillage');
+
+        // --- Cambodian Address Data ---
+        const cambodiaData = {
+            "រាជធានីភ្នំពេញ": {
+                "ដូនពេញ": { "ផ្សារថ្មីទី១": [], "ផ្សារថ្មីទី២": [], "ផ្សារថ្មីទី៣": [] },
+                "ទួលគោក": { "បឹងកក់ទី១": [], "បឹងកក់ទី២": [], "ទឹកល្អក់ទី១": [] },
+                "សែនសុខ": { "ភ្នំពេញថ្មី": [], "ទឹកថ្លា": [], "ឃ្មួញ": [] }
+            },
+            "ខេត្តសៀមរាប": {
+                "សៀមរាប": { "សាលាកំរើក": [], "គោកចក": [], "ស្លក្រាម": [] },
+                "ពួក": { "ពួក": [], "សំរោងយា": [], "ដូនកែវ": [] }
+            },
+            "ខេត្តបាត់ដំបង": {
+                "បាត់ដំបង": { "វត្តគរ": [], "អូរចារ": [], "ទួលតាឯក": [] },
+                "សង្កែ": { "អូរដំបង១": [], "អូរដំបង២": [], "វត្តតាមិម": [] }
+            },
+            "ខេត្តតាកែវ": {
+                "ក្រុងដូនកែវ": {
+                    "បារាយណ៍": ["បារាយណ៍", "ដើមផ្ដៀក", "ព្រៃព្រិច", "ព្រៃខ្លា", "ត្រពាំងសាលា", "ឡូរី", "ជ្រោយ", "ស្នោ"],
+                    "រកាក្នុង": ["រកាក្នុងទី១", "រកាក្នុងទី២", "អូរុន", "ចំការសំរោង", "ធ្នង់", "សុភី", "ត្រពាំងសាប"],
+                    "រកាក្រៅ": ["រកាក្រៅ", "ថ្មី", "តាឌុក", "តាដោ", "ត្រាំ", "ប្រហូត"]
+                },
+                "ស្រុកបាទី": {
+                    "ចំបក់": ["រលួស", "ត្រពាំងលើក", "ព្រៃរំពាក់", "ត្រពាំងក្រឡាញ់", "ត្រពាំងឈូក", "ត្រពាំងកក់", "ព្រៃជន្លួញ", "ត្រពាំងធំ", "ត្រពាំងព្រិច", "ថ្មី", "ក្រាំងអំពិល"],
+                    "ចំប៉ី": ["ចំប៉ី", "ព្រៃផ្គាំ", "កក់", "ស្រែឫស្សី", "ត្រពាំងឈូក", "ថ្មី", "ត្រពាំងរាំង", "ត្រពាំងរនៀម", "ត្រពាំងទា", "ព្រៃមូល"],
+                },
+                "ស្រុកកោះអណ្តែត": {
+                    "រមេញ": ["រមេញខាងត្បូង", "រមេញខាងជើង", "ដើមចាន់", "មានរិទ្ធ", "ដើមជ្រៃ", "ប្រឡាយមាស", "បត់រកា", "សំរោង", "ប្រាសាទ", "ដើមពោធិ៍"],
+                    "ពេជសារ": ["តាអូរ", "ជន្លូស", "ទួលមាស", "ព្រៃធំ", "ដំណាក់", "ត្របាយ", "កោះអណ្ដែត", "ក្រាំង", "តាអោក", "ពោធិ៍", "ពាន", "តាសៅ", "សិលា", "ស្នែ", "ចុងអន្ទង", "អង្គញ់", "តាប៉ិ", "កោះខ្ទម"],
+                    "ព្រៃខ្លា": ["ស្រម៉", "ស្រែបឹង", "ព្រៃមេលងខាងត្បូង", "ព្រៃមេលងខាងជើង", "កន្សោមអក", "ចំបក់", "សំភ្លី", "គរ", "ក្រាំងប្ញស្សី", "ព្រៃខ្លាខាងជើង", "ព្រៃខ្លាខាងត្បូង", "បន្ទាយធ្លាយ", "កែវកាំភ្លើង", "ទួលកណ្តាល", "ជំរុំ"],
+                    "ក្រពុំឈូក": ["ដើមដូង", "បេង", "ក្រពុំឈូក", "ព្រៃម្លូ", "ពានី", "តាពរ", "តាអ៊ុយ", "កោះមាន់", "វត្តស្លា", "ជ្រោយពោន", "ខ្លាគ្រហឹម ក", "ខ្លាគ្រហឹម ខ", "ត្រពាំងទនេ្ល"],
+                    "គោកធ្លក": ["គោកធ្លក", "ត្រពាំងឈូក", "ត្រពាំងក្រសាំង", "ត្រពាំងប្រិយ៍", "ព្រៃរនាម", "ព្រៃរោង", "ត្រពាំងស្យា", "ត្រពាំងត្នោត", "ត្រពាំងវែង"],
+                    "កំពែង": ["កំពែង", "ត្រពាំងឈូក", "ត្រពាំងក្រសាំង", "ត្រពាំងប្រិយ៍", "ព្រៃរនាម", "ព្រៃរោង", "ត្រពាំងស្យា", "ត្រពាំងត្នោត", "ត្រពាំងវែង"],
+                    "ធ្លាប្រជុំ": ["រលួស","រលួស","លៀប","ត្រពាំងកក់","អណ្តូងសំរិទិ្ធ","រូង","ព្នៅ","ស៊ីស្លា"]
+                },
+                 "ស្រុកអង្គរបូរី": {
+                     "អង្គរបូរី": [],
+                     "គោកធ្លក": [],
+                     "ពន្លៃ": [],
+                     "ព្រៃផ្គាំ": ["ស្រម៉ែ", "ស្រែបឹង", "មលង", "ខាងត្បូង", "មលងខាងជើង", "កន្សោម", "បត់", "សិរី", "គរ", "ត្រពាំងឫស្សី", "ត្រាំខាងជើង", "ត្រាំខាងត្បូង", "បន្ទាយ", "ថ្កូវ", "កោះកែវ", "ទួលកណ្ដាល", "ដី"],
+                     "ព្រះបាទជាន់ជុំ": [],
+                     "ទួលពង្រ": []
+                },
+                "ស្រុកបូរីជលសារ": {
+                    "បូរីជលសារ": [],
+                    "ជាងដែក": ["រលួស", "លៀប", "ត្រពាំងកក់", "អណ្ដូងសំរិទ្ធ", "ជ្រៃ", "ពោធិ៍", "ស៊ីស្ដា"],
+                    "ដូងខ្ពស់": [],
+                    "កំពង់ក្រសាំង": [],
+                    "គោកពោធិ៍": []
+                },
+                "ស្រុកព្រៃកប្បាស": {
+                    "អង្កាញ់": [],
+                    "បានៀវ": [],
+                    "ចំប៉ា": [],
+                    "ចារ": [],
+                    "កំពែង": [],
+                    "កំពង់រាប": [],
+                    "ព្រៃផ្តៅ": ["តាឌឹម", "ត្រពោន", "តាជិន", "តាចាន់", "តារៀន", "ពងអណ្ដើក"],
+                    "ព្រៃខ្លា": ["ស្រម៉", "ស្រែបឹង", "ព្រៃមេលងខាងត្បូង", "ព្រៃមេលងខាងជើង", "កន្សោមអក", "ចំបក់", "សំភ្លី", "គរ", "ក្រាំងប្ញស្សី", "ព្រៃខ្លាខាងជើង", "ព្រៃខ្លាខាងត្បូង", "បន្ទាយធ្លាយ", "កែវកាំភ្លើង", "ទួលកណ្តាល", "ជំរុំ"],
+                    "ព្រៃល្វា": [],
+                    "ស្នោ": [],
+                    "តាំងយ៉ាប": []
+                }
+            }
+        };
+
+        // --- UI Helper Functions (Modals, Toasts) ---
+        function showToast(message, type = 'success') {
+            clearTimeout(toastTimeout);
+            toastMessage.innerText = message;
+            toast.className = 'fixed top-5 right-5 text-white py-2 px-5 rounded-lg shadow-xl';
+            if (type === 'success') toast.classList.add('bg-green-600');
+            else if (type === 'error') toast.classList.add('bg-red-600');
+            else if (type === 'warning') toast.classList.add('bg-yellow-500');
+            toast.classList.add('toast-enter-active');
+            toast.classList.remove('toast-enter');
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('toast-exit-active');
+                toast.classList.remove('toast-enter-active');
+                setTimeout(() => {
+                    toast.classList.remove('toast-exit-active');
+                    toast.classList.add('toast-enter');
+                }, 300);
+            }, 4000);
+        }
+        
+        function closeEditModal() {
+            editModal.classList.add('hidden');
+            editForm.reset();
+        }
+
+        function openDeleteModal(studentId) {
+            studentToDeleteId = studentId;
+            deleteModal.classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            studentToDeleteId = null;
+            deleteModal.classList.add('hidden');
+        }
+
+        // --- Address Population Functions ---
+        function populateSelect(selectElement, items, placeholder) {
+            selectElement.innerHTML = `<option value="">-- ${placeholder} --</option>`;
+            items.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                selectElement.appendChild(option);
+            });
+        }
+
+        function setupAddressListeners(pSelect, dSelect, cSelect, vSelect) {
+            populateSelect(pSelect, Object.keys(cambodiaData), 'ជ្រើសរើសខេត្ត/រាជធានី');
+            
+            pSelect.addEventListener('change', () => {
+                const selectedProvince = pSelect.value;
+                dSelect.innerHTML = '';
+                cSelect.innerHTML = '';
+                vSelect.innerHTML = '';
+                dSelect.disabled = true;
+                cSelect.disabled = true;
+                vSelect.disabled = true;
+
+                if (selectedProvince) {
+                    const districts = Object.keys(cambodiaData[selectedProvince]);
+                    populateSelect(dSelect, districts, 'ជ្រើសរើសស្រុក/ខណ្ឌ');
+                    dSelect.disabled = false;
+                }
+            });
+
+            dSelect.addEventListener('change', () => {
+                const selectedProvince = pSelect.value;
+                const selectedDistrict = dSelect.value;
+                cSelect.innerHTML = '';
+                vSelect.innerHTML = '';
+                cSelect.disabled = true;
+                vSelect.disabled = true;
+
+                if (selectedDistrict) {
+                    const communes = Object.keys(cambodiaData[selectedProvince][selectedDistrict]);
+                    populateSelect(cSelect, communes, 'ជ្រើសរើសឃុំ/សង្កាត់');
+                    cSelect.disabled = false;
+                }
+            });
+
+            cSelect.addEventListener('change', () => {
+                const selectedProvince = pSelect.value;
+                const selectedDistrict = dSelect.value;
+                const selectedCommune = cSelect.value;
+                vSelect.innerHTML = '';
+                vSelect.disabled = true;
+
+                if (selectedCommune) {
+                    const villages = cambodiaData[selectedProvince][selectedDistrict][selectedCommune];
+                    populateSelect(vSelect, villages, 'ជ្រើសរើសភូមិ');
+                    vSelect.disabled = false;
+                }
+            });
+        }
+
+        // --- Data & Rendering Functions ---
+        function renderStudents(docs) {
+            studentList.innerHTML = '';
+            allStudents = docs.map(doc => ({ id: doc.id, ...doc.data() })); // Store data for CSV export
+
+            if (allStudents.length === 0) {
+                studentList.innerHTML = `<tr><td colspan="13" class="text-center p-8 text-gray-500">មិនទាន់មានទិន្នន័យ...</td></tr>`;
+                return;
+            }
+            allStudents.forEach((student, index) => {
+                const row = document.createElement('tr');
+                row.classList.add('hover:bg-gray-50');
+                const pobAddress = [student.pobVillage, student.pobCommune, student.pobDistrict, student.pobProvince].filter(Boolean).join(', ');
+                const currentAddress = [student.currentVillage, student.currentCommune, student.currentDistrict, student.currentProvince].filter(Boolean).join(', ');
+                
+                row.innerHTML = `
+                    <td class="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900">${index + 1}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${student.name || ''}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${student.gender || ''}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${student.dob || ''}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${pobAddress}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${student.fatherName || ''}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${student.motherName || ''}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${currentAddress}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${student.fromSchool || ''}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${student.className || ''}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${student.gpa || ''}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${student.contact || ''}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-center text-sm font-medium space-x-2">
+                        <button data-id="${student.id}" class="edit-btn text-blue-600 hover:text-blue-900 transition"><ion-icon name="create-outline" class="text-xl"></ion-icon></button>
+                        <button data-id="${student.id}" class="delete-btn text-red-600 hover:text-red-900 transition"><ion-icon name="trash-outline" class="text-xl"></ion-icon></button>
+                    </td>
+                `;
+                studentList.appendChild(row);
+            });
+        }
+
+        function renderHistory(docs) {
+            historyLog.innerHTML = '';
+            if (docs.length === 0) {
+                historyLog.innerHTML = `<p class="text-center text-gray-500">មិនទាន់មានសកម្មភាព...</p>`;
+                return;
+            }
+            docs.forEach(doc => {
+                const log = doc.data();
+                const timestamp = log.timestamp.toDate().toLocaleString('en-GB');
+                let actionText = '';
+                let actionColor = '';
+                switch (log.action) {
+                    case 'added':
+                        actionText = 'បានបន្ថែម';
+                        actionColor = 'text-green-600';
+                        break;
+                    case 'edited':
+                        actionText = 'បានកែសម្រួល';
+                        actionColor = 'text-yellow-600';
+                        break;
+                    case 'deleted':
+                        actionText = 'បានលុប';
+                        actionColor = 'text-red-600';
+                        break;
+                }
+                const logEntry = document.createElement('div');
+                logEntry.className = 'p-3 bg-gray-50 rounded-lg text-sm';
+                logEntry.innerHTML = `
+                    <p><span class="font-semibold ${actionColor}">${actionText}</span> សិស្សឈ្មោះ <span class="font-semibold text-blue-700">${log.studentName}</span></p>
+                    <p class="text-xs text-gray-500">${timestamp}</p>
+                `;
+                historyLog.appendChild(logEntry);
+            });
+        }
+
+        async function logHistory(action, studentName, details) {
+            if (!historyCollectionRef) return;
+            try {
+                await addDoc(historyCollectionRef, {
+                    action,
+                    studentName,
+                    details: JSON.stringify(details), // Store details as a JSON string
+                    timestamp: new Date()
+                });
+            } catch (error) {
+                console.error("Error logging history:", error);
+            }
+        }
+
+        async function sendDataToGoogleSheet(data) {
+            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbwW52g3Pt31EKqqHKNmHgMG9vUH3HM5G1-xs6m2WSzj7n9G-jFZ0HN-igRa3zfRuBbx/exec';
+            try {
+                await fetch(googleScriptUrl, {
+                    method: 'POST', mode: 'no-cors', cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data), redirect: 'follow'
+                });
+                console.log("Successfully sent data to Google Sheet.");
+            } catch (error) {
+                console.error('Error sending data to Google Sheet:', error);
+                showToast("បរាជ័យក្នុងការរក្សាទុកទិន្នន័យទៅ Google Sheet", "error");
+            }
+        }
+
+        async function openEditModal(studentId) {
+            if (!userId) return;
+            const docRef = doc(db, `/artifacts/${appId}/users/${userId}/students`, studentId);
+            try {
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const student = docSnap.data();
+                    document.getElementById('edit-id').value = studentId;
+                    document.getElementById('editStudentName').value = student.name;
+                    document.querySelectorAll('input[name="editGender"]').forEach(radio => { radio.checked = radio.value === student.gender; });
+                    document.getElementById('editDob').value = student.dob;
+                    document.getElementById('editFatherName').value = student.fatherName || '';
+                    document.getElementById('editMotherName').value = student.motherName || '';
+                    document.getElementById('editFromSchool').value = student.fromSchool || '';
+                    document.getElementById('editClassName').value = student.className || '';
+                    document.getElementById('editGpa').value = student.gpa || '';
+                    document.getElementById('editContact').value = student.contact;
+                    
+                    // --- Populate POB Address in Edit Modal ---
+                    const pobProvince = student.pobProvince || '';
+                    const pobDistrict = student.pobDistrict || '';
+                    const pobCommune = student.pobCommune || '';
+                    editPobProvinceSelect.value = pobProvince;
+                    if (pobProvince) {
+                        const districts = Object.keys(cambodiaData[pobProvince]);
+                        populateSelect(editPobDistrictSelect, districts, 'ជ្រើសរើសស្រុក/ខណ្ឌ');
+                        editPobDistrictSelect.value = pobDistrict;
+                        editPobDistrictSelect.disabled = false;
+                    }
+                    if (pobDistrict) {
+                        const communes = Object.keys(cambodiaData[pobProvince][pobDistrict]);
+                        populateSelect(editPobCommuneSelect, communes, 'ជ្រើសរើសឃុំ/សង្កាត់');
+                        editPobCommuneSelect.value = pobCommune;
+                        editPobCommuneSelect.disabled = false;
+                    }
+                    if (pobCommune) {
+                        const villages = cambodiaData[pobProvince][pobDistrict][pobCommune];
+                        populateSelect(editPobVillageSelect, villages, 'ជ្រើសរើសភូមិ');
+                        editPobVillageSelect.value = student.pobVillage || '';
+                        editPobVillageSelect.disabled = false;
+                    }
+
+                    // --- Populate Current Address in Edit Modal ---
+                    const currentProvince = student.currentProvince || '';
+                    const currentDistrict = student.currentDistrict || '';
+                    const currentCommune = student.currentCommune || '';
+                    editCurrentProvinceSelect.value = currentProvince;
+                    if (currentProvince) {
+                        const districts = Object.keys(cambodiaData[currentProvince]);
+                        populateSelect(editCurrentDistrictSelect, districts, 'ជ្រើសរើសស្រុក/ខណ្ឌ');
+                        editCurrentDistrictSelect.value = currentDistrict;
+                        editCurrentDistrictSelect.disabled = false;
+                    }
+                    if (currentDistrict) {
+                        const communes = Object.keys(cambodiaData[currentProvince][currentDistrict]);
+                        populateSelect(editCurrentCommuneSelect, communes, 'ជ្រើសរើសឃុំ/សង្កាត់');
+                        editCurrentCommuneSelect.value = currentCommune;
+                        editCurrentCommuneSelect.disabled = false;
+                    }
+                    if (currentCommune) {
+                        const villages = cambodiaData[currentProvince][currentDistrict][currentCommune];
+                        populateSelect(editCurrentVillageSelect, villages, 'ជ្រើសរើសភូមិ');
+                        editCurrentVillageSelect.value = student.currentVillage || '';
+                        editCurrentVillageSelect.disabled = false;
+                    }
+
+                    editModal.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error getting document for edit:", error);
+            }
+        }
+
+        // --- Main Event Handler Functions ---
+        async function handleAddStudent(e) {
+            e.preventDefault();
+            if (!studentsCollectionRef) {
+                showToast("ការតភ្ជាប់មូលដ្ឋានទិន្នន័យមិនទាន់រួចរាល់ទេ។", "error");
+                return;
+            }
+            const submitButton = registrationForm.querySelector('button[type="submit"]');
+            const formData = new FormData(registrationForm);
+            const studentData = {
+                name: formData.get('studentName'),
+                gender: formData.get('gender'),
+                dob: formData.get('dob'),
+                pobProvince: formData.get('pobProvince'),
+                pobDistrict: formData.get('pobDistrict'),
+                pobCommune: formData.get('pobCommune'),
+                pobVillage: formData.get('pobVillage'),
+                fatherName: formData.get('fatherName'),
+                motherName: formData.get('motherName'),
+                currentProvince: formData.get('currentProvince'),
+                currentDistrict: formData.get('currentDistrict'),
+                currentCommune: formData.get('currentCommune'),
+                currentVillage: formData.get('currentVillage'),
+                fromSchool: formData.get('fromSchool'),
+                className: formData.get('className'),
+                gpa: formData.get('gpa'),
+                contact: formData.get('contact'),
+            };
+
+            submitButton.disabled = true;
+            submitButton.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>កំពុងដំណើរការ...</span>`;
+
+            try {
+                const docRef = await addDoc(studentsCollectionRef, { ...studentData, createdAt: new Date() });
+                await logHistory('added', studentData.name, { studentId: docRef.id, ...studentData });
+                await sendDataToGoogleSheet(studentData);
+                registrationForm.reset();
+                // Reset address dropdowns
+                pobDistrictSelect.innerHTML = ''; pobDistrictSelect.disabled = true;
+                pobCommuneSelect.innerHTML = ''; pobCommuneSelect.disabled = true;
+                pobVillageSelect.innerHTML = ''; pobVillageSelect.disabled = true;
+                currentDistrictSelect.innerHTML = ''; currentDistrictSelect.disabled = true;
+                currentCommuneSelect.innerHTML = ''; currentCommuneSelect.disabled = true;
+                currentVillageSelect.innerHTML = ''; currentVillageSelect.disabled = true;
+                showToast("បានបន្ថែមសិស្សដោយជោគជ័យ!", "success");
+            } catch (error) {
+                console.error("Error adding student: ", error);
+                showToast("មានបញ្ហាក្នុងការបន្ថែមសិស្ស។", "error");
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = `<ion-icon name="add-circle-outline"></ion-icon><span>ចុះឈ្មោះ</span>`;
+            }
+        }
+        
+        async function handleUpdateStudent(e) {
+            e.preventDefault();
+            if (!userId) return;
+            const studentId = document.getElementById('edit-id').value;
+            const docRef = doc(db, `/artifacts/${appId}/users/${userId}/students`, studentId);
+            
+            const docSnap = await getDoc(docRef);
+            const originalData = docSnap.data();
+
+            const updatedData = {
+                name: document.getElementById('editStudentName').value,
+                gender: document.querySelector('input[name="editGender"]:checked').value,
+                dob: document.getElementById('editDob').value,
+                pobProvince: document.getElementById('editPobProvince').value,
+                pobDistrict: document.getElementById('editPobDistrict').value,
+                pobCommune: document.getElementById('editPobCommune').value,
+                pobVillage: document.getElementById('editPobVillage').value,
+                fatherName: document.getElementById('editFatherName').value,
+                motherName: document.getElementById('editMotherName').value,
+                currentProvince: document.getElementById('editCurrentProvince').value,
+                currentDistrict: document.getElementById('editCurrentDistrict').value,
+                currentCommune: document.getElementById('editCurrentCommune').value,
+                currentVillage: document.getElementById('editCurrentVillage').value,
+                fromSchool: document.getElementById('editFromSchool').value,
+                className: document.getElementById('editClassName').value,
+                gpa: document.getElementById('editGpa').value,
+                contact: document.getElementById('editContact').value,
+            };
+            try {
+                await updateDoc(docRef, updatedData);
+                await logHistory('edited', updatedData.name, { before: originalData, after: updatedData });
+                closeEditModal();
+                showToast("បានកែសម្រួលព័ត៌មានជោគជ័យ!", "success");
+            } catch (error) {
+                console.error("Error updating student: ", error);
+                showToast("ការកែសម្រួលមានបញ្ហា", "error");
+            }
+        }
+
+        async function handleDeleteStudent() {
+            if (!studentToDeleteId || !userId) return;
+            const docRef = doc(db, `/artifacts/${appId}/users/${userId}/students`, studentToDeleteId);
+            try {
+                const docSnap = await getDoc(docRef);
+                const deletedData = docSnap.data();
+
+                await deleteDoc(docRef);
+                await logHistory('deleted', deletedData.name, deletedData);
+                closeDeleteModal();
+                showToast("បានលុបសិស្សដោយជោគជ័យ!", "success");
+            } catch (error) {
+                console.error("Error deleting student: ", error);
+                showToast("ការលុបមានបញ្ហា", "error");
+            }
+        }
+
+        function handleTableClick(e) {
+            const target = e.target.closest('button');
+            if (!target) return;
+            const studentId = target.dataset.id;
+            if (target.classList.contains('edit-btn')) openEditModal(studentId);
+            else if (target.classList.contains('delete-btn')) openDeleteModal(studentId);
+        }
+
+        function downloadCSV() {
+            if (allStudents.length === 0) {
+                showToast("មិនមានទិន្នន័យសម្រាប់ទាញយកទេ។", "warning");
+                return;
+            }
+
+            const headers = [
+                "ឈ្មោះសិស្ស", "ភេទ", "ថ្ងៃខែឆ្នាំកំណើត",
+                "ភូមិ (កំណើត)", "ឃុំ/សង្កាត់ (កំណើត)", "ស្រុក/ខណ្ឌ (កំណើត)", "ខេត្ត/ក្រុង (កំណើត)",
+                "ឈ្មោះឳពុក", "ឈ្មោះម្តាយ",
+                "ភូមិ (បច្ចុប្បន្ន)", "ឃុំ/សង្កាត់ (បច្ចុប្បន្ន)", "ស្រុក/ខណ្ឌ (បច្ចុប្បន្ន)", "ខេត្ត/ក្រុង (បច្ចុប្បន្ន)",
+                "មកពីសាលា", "ថ្នាក់", "មធ្យមភាគ", "លេខទូរស័ព្ទ"
+            ];
+
+            const csvRows = [headers.join(',')];
+
+            for (const student of allStudents) {
+                const values = [
+                    student.name, student.gender, student.dob,
+                    student.pobVillage, student.pobCommune, student.pobDistrict, student.pobProvince,
+                    student.fatherName, student.motherName,
+                    student.currentVillage, student.currentCommune, student.currentDistrict, student.currentProvince,
+                    student.fromSchool, student.className, student.gpa, student.contact
+                ].map(val => `"${val || ''}"`); // Wrap each value in quotes to handle commas
+                
+                csvRows.push(values.join(','));
+            }
+
+            const csvString = "\uFEFF" + csvRows.join('\n'); // Add BOM for Excel UTF-8 support
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'student_list.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // --- Initialization & Listeners ---
+        function setupListeners() {
+            if (!userId) return;
+            if (unsubscribeStudents) unsubscribeStudents();
+            if (unsubscribeHistory) unsubscribeHistory();
+
+            studentsCollectionRef = collection(db, `/artifacts/${appId}/users/${userId}/students`);
+            const studentsQuery = query(studentsCollectionRef);
+            unsubscribeStudents = onSnapshot(studentsQuery, (snapshot) => renderStudents(snapshot.docs));
+
+            historyCollectionRef = collection(db, `/artifacts/${appId}/users/${userId}/registration_history`);
+            const historyQuery = query(historyCollectionRef, orderBy("timestamp", "desc"));
+            unsubscribeHistory = onSnapshot(historyQuery, (snapshot) => renderHistory(snapshot.docs));
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userId = user.uid;
+                console.log("Authenticated with userId:", userId);
+                setupListeners();
+            } else {
+                signInAnonymously(auth).catch((error) => console.error("Anonymous sign-in failed:", error));
+            }
+        });
+
+        // Setup address dropdowns for all forms
+        setupAddressListeners(pobProvinceSelect, pobDistrictSelect, pobCommuneSelect, pobVillageSelect);
+        setupAddressListeners(currentProvinceSelect, currentDistrictSelect, currentCommuneSelect, currentVillageSelect);
+        setupAddressListeners(editPobProvinceSelect, editPobDistrictSelect, editPobCommuneSelect, editPobVillageSelect);
+        setupAddressListeners(editCurrentProvinceSelect, editCurrentDistrictSelect, editCurrentCommuneSelect, editCurrentVillageSelect);
+
+        registrationForm.addEventListener('submit', handleAddStudent);
+        studentList.addEventListener('click', handleTableClick);
+        editForm.addEventListener('submit', handleUpdateStudent);
+        cancelEditBtn.addEventListener('click', closeEditModal);
+        cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+        confirmDeleteBtn.addEventListener('click', handleDeleteStudent);
+        downloadCsvBtn.addEventListener('click', downloadCSV);
+    </script>
+</body>
+</html>
